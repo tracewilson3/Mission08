@@ -2,26 +2,35 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Mission08.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Mission08.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    private FTFDbContext _context;
+
+    public HomeController(FTFDbContext context)
     {
-        _logger = logger;
+        _context = context;
+
     }
 
     public IActionResult Index()
     {
-        return View();
+        var FTF = _context.Tasks
+            .Include(t => t.Quadrant) // Include Quadrant data
+            .Include(t => t.Category);
+        return View(FTF);
     }
+
 
     // Get route for Quadrants view
     [HttpGet]
     public IActionResult Quadrants()
+
     {
         var Quadrants = _context.Tasks
         return View(Quadrants);
@@ -50,6 +59,7 @@ public class HomeController : Controller
     }
 
 
+
     // Get route for deletion confirmation view
     [HttpGet]
     public IActionResult ConfirmDeletion(int id)
@@ -70,3 +80,4 @@ public class HomeController : Controller
 
 
 }
+
