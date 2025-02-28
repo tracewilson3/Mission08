@@ -1,20 +1,28 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Mission08.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Mission08.Controllers;
 
 public class HomeController : Controller
 {
-    private TaskDbContext _taskContext; // creates an instance of the database
-    public HomeController(TaskDbContext temp)
+
+    private FTFDbContext _context;
+
+    public HomeController(FTFDbContext context)
     {
-        _TaskContext = temp;
+        _context = context;
+
     }
 
     public IActionResult Index()
     {
-        return View();
+        var FTF = _context.Tasks
+            .Include(t => t.Quadrant) // Include Quadrant data
+            .Include(t => t.Category);
+        return View(FTF);
     }
     public IActionResult AddTask()
     {
