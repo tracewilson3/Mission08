@@ -8,11 +8,13 @@ namespace Mission08.Controllers;
 
 public class HomeController : Controller
 {
+
     private FTFDbContext _context;
 
     public HomeController(FTFDbContext context)
     {
         _context = context;
+
     }
 
     public IActionResult Index()
@@ -22,15 +24,15 @@ public class HomeController : Controller
             .Include(t => t.Category);
         return View(FTF);
     }
-
-    public IActionResult Privacy()
+    public IActionResult AddTask()
+    {
+        return View();
+    }
+    
+    public IActionResult Confirmation()
     {
         return View();
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
+
 }
