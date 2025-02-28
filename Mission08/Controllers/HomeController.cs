@@ -32,7 +32,7 @@ public class HomeController : Controller
     public IActionResult Quadrants()
 
     {
-        var Quadrants = _context.Tasks
+        var Quadrants = _context.Tasks;
         return View(Quadrants);
     }
 
