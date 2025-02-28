@@ -1,0 +1,102 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Task
+
+<h2 class="text-center">Steven Covey's Time Management Matrix</h2>
+
+<div class="container mt-5">
+    <!-- Header Row -->
+    <div class="row text-center fw-bold">
+        <div class="col-1"></div>
+        <div class="col-5 bg-light border py-3">Urgent</div>
+        <div class="col-5 bg-light border py-3">Not Urgent</div>
+    </div>
+
+    <!-- Row 1 -->
+    <div class="row text-center">
+        <div class="col-1 bg-light border fw-bold d-flex align-items-center justify-content-center"
+             style="writing-mode: vertical-rl; transform: rotate(180deg);">
+            Important
+        </div>
+
+        <!--Quadrant 1 (Important, Urgent)-->
+        <div class="col-5 border py-4">Quadrant 1
+            <ul>
+                @foreach (t in Model)
+                {
+                    @if (t.QuadrantId == 1)
+                    {
+                        <li>@t.TaskName 
+                            <a asp-controller="Home" asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-info">Edit </a>
+                            <a asp-controller="Home" asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger">Delete</a>
+                        </li>
+                    } 
+                }
+            </ul>
+        </div>
+
+        <!--Quadrant 2 (Important, Not Urgent)-->
+        <div class="col-5 border py-4">Quadrant 2
+            <ul>
+                @foreach (t in Model)
+                {
+                    @if (t.QuadrantId == 2)
+                    {
+                        <li>
+                            @t.TaskName 
+                            <a asp-controller="Home" asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-info">Edit </a>
+                            <a asp-controller="Home" asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger">Delete</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="row text-center">
+        <div class="col-1 bg-light border fw-bold d-flex align-items-center justify-content-center"
+             style="writing-mode: vertical-rl; transform: rotate(180deg);">
+            Not Important
+        </div>
+
+        <!--Quadrant 3 (Not Important, Urgent)-->
+        <div class="col-5 border py-4">Quadrant 3
+            <ul>
+                @foreach (t in Model)
+                {
+                    @if (t.QuadrantId == 3)
+                    {
+                        <li>
+                            @t.TaskName 
+                            <a asp-controller="Home" asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-info">Edit </a>
+                            <a asp-controller="Home" asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger">Delete</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+        <!--Quadrant 4 (Not Important, Not Urgent)-->
+        <div class="col-5 border py-4">Quadrant 4
+            <ul>
+                @foreach (t in Model)
+                {
+                    @if (t.QuadrantId == 4)
+                    {
+                        <li>
+                            @t.TaskName 
+                            <a asp-controller="Home" asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-info">Edit </a>
+                            <a asp-controller="Home" asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger">Delete</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+
