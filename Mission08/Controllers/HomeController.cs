@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Mission08.Models;
@@ -18,14 +19,54 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Privacy()
+    // Get route for Quadrants view
+    [HttpGet]
+    public IActionResult Quadrants()
     {
-        return View();
+        var Quadrants = _context.Tasks
+        return View(Quadrants);
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    // Get route to edit a task and populate fields in the already existing "TaskForm" view
+    [HttpGet]
+    public IActionResult Edit(int id)
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        var recordToEdit = _context.Tasks.Single(x => x.TaskId == id);
+        ViewBag.Quadrants = _context.Quadrants.OrderBy(x => x.QuadrantName).ToList();
+
+        return View("TaskForm", recordToEdit);
+
     }
+
+    // Post route for the edit task functionality
+    [HttpPost]
+    public IActionResult Edit(Task updatedTask)
+    {
+        _context.Update(updatedTask);
+        _context.SaveChanges();
+
+        return RedirectToAction("Quadrants");
+
+    }
+
+
+    // Get route for deletion confirmation view
+    [HttpGet]
+    public IActionResult ConfirmDeletion(int id)
+    {
+        var recordToDelete = _context.Tasks.Single(x => x.TaskId == id);
+       
+        return View(recordToDelete);
+    }
+
+    [HttpPost]
+    public IActionResult Delete(Task task) 
+    {
+        _context.Tasks.Remove(task);
+        _context.SaveChanges();
+
+        return RedirectToAction("Quadrants");
+    }
+
+
 }
