@@ -1,16 +1,17 @@
 using Microsoft.EntityFrameworkCore;
+using Mission08.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
+
 
 builder.Services.AddDbContext<FTFDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("FirstThingsFirstConnection")));
 
-
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

@@ -1,35 +1,36 @@
-@model TaskItem
+@model Mission08.Models.Task
 
-@{
-    ViewData["Title"] = Model?.Id == 0 ? "Add Task" : "Edit Task";
-}
+
 
 <h2 class="text-center">@ViewData["Title"]</h2>
+
 
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <form asp-action="@(Model?.Id == 0 ? "Create" : "Edit")" method="post">
+                    
+                    <form asp-action="@(Model?.TaskId == 0 ? "Add" : "Edit")" method="post">
+                        <input type="hidden" asp-for="TaskId">
                         <div class="row">
                             <!-- Task Name -->
                             <div class="col-md-12 mb-3">
-                                <label asp-for="Task" class="form-label">Task</label>
-                                <input asp-for="Task" class="form-control" required />
-                                <span asp-validation-for="Task" class="text-danger"></span>
+                                <label asp-for="TaskName" class="form-label">Task</label>
+                                <input asp-for="TaskName" class="form-control" required/>
+                                <span asp-validation-for="TaskName" class="text-danger"></span>
                             </div>
 
                             <!-- Due Date -->
                             <div class="col-md-6 mb-3">
                                 <label asp-for="DueDate" class="form-label">Due Date</label>
-                                <input asp-for="DueDate" type="date" class="form-control" />
+                                <input asp-for="DueDate" type="date" class="form-control"/>
                             </div>
 
                             <!-- Quadrant Selection -->
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Quadrant" class="form-label">Quadrant</label>
-                                <select asp-for="Quadrant" class="form-select" required>
+                                <label asp-for="QuadrantId" class="form-label">Quadrant</label>
+                                <select asp-for="QuadrantId" class="form-select" required>
                                     <option value="1">Important / Urgent</option>
                                     <option value="2">Important / Not Urgent</option>
                                     <option value="3">Not Important / Urgent</option>
@@ -38,23 +39,30 @@
                             </div>
 
                             <!-- Category Selection -->
+                            <div class="mb-3">
+                                <label asp-for="CategoryId" class="form-label">Category:</label>
+                                <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "CategoryName"))">
+                                    <option value="">Select a Category</option>
+                                </select>
+                                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                            </div>
+
+
+
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Category" class="form-label">Category</label>
-                                <select asp-for="Category" class="form-select">
-                                    <option value="Home">Home</option>
-                                    <option value="School">School</option>
-                                    <option value="Work">Work</option>
-                                    <option value="Church">Church</option>
+                                <label asp-for="Completed" class="form-label">Completed</label>
+                                <select asp-for="Completed" class="form-select">
+                                    <option value="true" @(Model.Completed == true ? "selected" : "")>Yes</option>
+                                    <option value="false" @(Model.Completed == false ? "selected" : "")>No</option>
+                                    <option value="" @(Model.Completed == null ? "selected" : "")>Not Set</option>
                                 </select>
                             </div>
 
-                            <!-- Completed Checkbox -->
-                            <div class="col-md-6 mb-3 d-flex align-items-center">
-                                <div class="form-check">
-                                    <input asp-for="Completed" class="form-check-input" type="checkbox" />
-                                    <label asp-for="Completed" class="form-check-label">Completed</label>
-                                </div>
-                            </div>
+
+
+
+
+
                         </div>
 
                         <!-- Form Buttons -->

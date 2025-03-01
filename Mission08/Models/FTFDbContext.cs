@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace Mission08.Models;
+
 public class FTFDbContext : DbContext
 {
     public FTFDbContext(DbContextOptions<FTFDbContext> options) : base(options) { }

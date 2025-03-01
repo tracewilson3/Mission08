@@ -3,13 +3,16 @@
 *@
 @{
 }
-@model Task
+@model Mission08.Models.Task
 
 <h3>Confirm Deletion</h3>
 
 <h5>Are you sure you want to delete the task "<span style="font-weight: bold">@Model.TaskName</span>" from your task list?</h5>
-<form method="post">
-    <input for="TaskId" type="hidden"/>
+
+<form asp-action="ConfirmDeletion" method="post">
+    <!-- Ensure the TaskId is properly sent with the form -->
+    <input type="hidden" asp-for="TaskId" />
+
     <button type="submit" class="btn btn-danger">Delete</button>
-    <button asp-controller="Home" asp-action="Quadrants" class="btn btn-info">Cancel</button>
+    <a asp-controller="Home" asp-action="Quadrants" class="btn btn-info">Cancel</a>
 </form>

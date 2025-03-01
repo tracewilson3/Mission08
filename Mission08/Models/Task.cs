@@ -1,6 +1,7 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Mission08.Models;
 
 public class Task
 {
@@ -12,7 +13,7 @@ public class Task
 
     public DateTime? DueDate { get; set; } 
 
-    public int? Completed { get; set; } 
+    public bool? Completed { get; set; } 
 
     // Foreign Key for Quadrant
     public int QuadrantId { get; set; }

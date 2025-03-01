@@ -1,5 +1,6 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
+namespace Mission08.Models;
 
 public class Quadrant
 {
