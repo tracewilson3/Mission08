@@ -52,10 +52,11 @@
                             <div class="col-md-6 mb-3">
                                 <label asp-for="Completed" class="form-label">Completed</label>
                                 <select asp-for="Completed" class="form-select">
-                                    <option value="true" @(Model.Completed == true ? "selected" : "")>Yes</option>
-                                    <option value="false" @(Model.Completed == false ? "selected" : "")>No</option>
-                                    <option value="" @(Model.Completed == null ? "selected" : "")>Not Set</option>
+                                    <option value="true" selected="@(Model.Completed == true)">Yes</option>
+                                    <option value="false" selected="@(Model.Completed == false)">No</option>
+                                    <option value="" selected="@(Model.Completed == null)">Not Set</option>
                                 </select>
+
                             </div>
 
 

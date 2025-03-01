@@ -22,20 +22,27 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         var FTF = _context.Tasks
-            .Include(t => t.Quadrant) // Include Quadrant data
-            .Include(t => t.Category);
+            .Include(t => t.Quadrant)
+            .Include(t => t.Category)
+            .ToList(); // Convert DbSet to List
         return View(FTF);
+
+
     }
 
 
     // Get route for Quadrants view
     [HttpGet]
     public IActionResult Quadrants()
-
     {
-        var Quadrants = _context.Tasks;
-        return View(Quadrants);
+        var tasks = _context.Tasks
+            .Include(t => t.Quadrant) // Ensure Quadrant data is included
+            .Include(t => t.Category) // Include Category data (if needed)
+            .ToList();
+
+        return View("Quadrants", tasks); // ✅ Pass model to the view
     }
+
 
     // Get route to edit a task and populate fields in the already existing "TaskForm" view
 
@@ -50,7 +57,7 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Add(Task NewTask)
     {
-        _context.Update(NewTask);
+        _context.Add(NewTask);
         _context.SaveChanges();
 
         return RedirectToAction("Quadrants");
@@ -59,12 +66,20 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var recordToEdit = _context.Tasks.Single(x => x.TaskId == id);
+        var recordToEdit = _context.Tasks.SingleOrDefault(x => x.TaskId == id);
+    
+        if (recordToEdit == null)
+        {
+            return NotFound();
+        }
+
         ViewBag.Quadrants = _context.Quadrants.OrderBy(x => x.QuadrantName).ToList();
+        ViewBag.Categories = _context.Categories.ToList(); // ✅ Ensure Categories is set
 
         return View("Add", recordToEdit);
-
     }
+
+
 
     // Post route for the edit task functionality
     [HttpPost]
@@ -80,7 +95,6 @@ public class HomeController : Controller
 
 
     // Get route for deletion confirmation view
-    [HttpGet]
     [HttpGet]
     public IActionResult ConfirmDeletion(int id)
     {
