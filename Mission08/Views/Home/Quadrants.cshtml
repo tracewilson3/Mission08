@@ -25,7 +25,8 @@
             <ul>
                 @foreach (var t in Model)
                 {
-                    @if (t.QuadrantId == 1)
+                    @if (t.QuadrantId == 1 && t.Completed == false)
+                        
                     {
                         <li>@t.TaskName
                             <a asp-controller="Home" asp-action="Edit" asp-route-id="@t.TaskId" class="btn btn-info">Edit </a>
@@ -41,7 +42,7 @@
             <ul>
                 @foreach (var t in Model)
                 {
-                    @if (t.QuadrantId == 2)
+                    @if (t.QuadrantId == 2 && t.Completed == false)
                     {
                         <li>
                             @t.TaskName
@@ -66,7 +67,7 @@
             <ul>
                 @foreach (var t in Model)
                 {
-                    @if (t.QuadrantId == 3)
+                    @if (t.QuadrantId == 3 && t.Completed == false)
                     {
                         <li>
                             @t.TaskName
@@ -83,7 +84,7 @@
             <ul>
                 @foreach (var t in Model)
                 {
-                    @if (t.QuadrantId == 4)
+                    @if (t.QuadrantId == 4 && t.Completed == false)
                     {
                         <li>
                             @t.TaskName
